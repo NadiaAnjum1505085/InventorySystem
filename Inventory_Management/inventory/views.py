@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from .forms import NewUserForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import NewUserForm
+from django.contrib.auth.models import User
+#
+from rest_framework.authtoken.models import Token
+
 
 # Create your views here.
 def index(request):
@@ -37,4 +41,10 @@ def login(request):
     
 
     return render(request,'Inventory/login.html')
+
+def TokenCreate(request):
+    for user in User.objects.all():
+        Token.objects.get_or_create(user=user)
+    return HttpResponse('Token creation done')
+
 
